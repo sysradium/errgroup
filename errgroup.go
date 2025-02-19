@@ -20,7 +20,6 @@ func (g *Group) Go(fn GFn) {
 	g.Group.Go(res)
 }
 
-// make a table test using testify for this function AI!
 func (g *Group) TryGo(fn GFn) bool {
 	res := fn
 	for i := len(g.middlewares) - 1; i >= 0; i-- {
