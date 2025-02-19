@@ -29,7 +29,7 @@ func (g *Group) TryGo(fn GFn) bool {
 	return g.Group.TryGo(res)
 }
 
-func New(middlewares []Middleware) *Group {
+func New(middlewares ...Middleware) *Group {
 	return &Group{
 		Group:       &errgroup.Group{},
 		middlewares: middlewares,
@@ -43,6 +43,7 @@ func WithContext(ctx context.Context) (Group, context.Context) {
 	}, ctx
 }
 
-type GFn func() error
-
-type Middleware func(GFn) GFn
+type (
+	GFn        func() error
+	Middleware func(GFn) GFn
+)

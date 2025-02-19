@@ -26,7 +26,7 @@ func allwaysReturnError(err error) Middleware {
 }
 
 func TestSingleMiddlwareGetsApplied(t *testing.T) {
-	g := New([]Middleware{supressError()})
+	g := New(supressError())
 
 	g.Go(func() error {
 		return errors.New("f")
@@ -38,10 +38,10 @@ func TestSingleMiddlwareGetsApplied(t *testing.T) {
 
 func TestMiddlwaresAreAppliedInOrderRightToLeft(t *testing.T) {
 	err := errors.New("some expected error")
-	g := New([]Middleware{
+	g := New(
 		allwaysReturnError(err),
 		supressError(),
-	})
+	)
 
 	g.Go(func() error {
 		return errors.New("f")
