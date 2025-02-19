@@ -1,0 +1,68 @@
+run:
+  timeout: 5m
+  tests: true
+
+linters-settings:
+  govet:
+    check-shadowing: true # Prevent variable shadowing
+  errcheck:
+    check-type-assertions: true # Ensure type assertions are checked
+    check-blank: true # Prevent unchecked errors
+  staticcheck:
+    checks: all # Use all available checks
+  gocritic:
+    enabled-checks:
+      - rangeValCopy # Avoid unnecessary value copies in range loops
+      - ifElseChain # Avoid deep if-else nesting
+      - hugeParam # Avoid passing large structs by value
+  revive:
+    rules:
+      - name: unexported-return # Avoid returning unexported types
+      - name: indent-error-flow # Improve error handling readability
+  goconst:
+    min-len: 3 # Detect duplicate string constants of length ≥3
+  gocyclo:
+    min-complexity: 10 # Set function complexity limit
+  dupl:
+    threshold: 100 # Detect duplicate code blocks
+  funlen:
+    lines: 80 # Enforce function length limits
+  gofumpt:
+    simplify: true # Enforce strict formatting rules
+
+linters:
+  enable:
+    - errcheck
+    - staticcheck
+    - gosimple
+    - govet
+    - revive
+    - gocritic
+    - goconst
+    - gofmt
+    - gofumpt
+    - ineffassign
+    - gocyclo
+    - dupl
+    - unconvert
+    - asciicheck
+    - bodyclose
+    - durationcheck
+    - prealloc
+    - noctx
+    - wastedassign
+    - unused
+
+issues:
+  exclude-rules:
+    - path: _test\.go
+      linters:
+        - errcheck # Allow unchecked errors in test files
+  max-issues-per-linter: 100
+  max-same-issues: 3
+
+output:
+  format: tab # Use tabulated output for better readability
+  print-issued-lines: true
+  print-linter-name: true
+  uniq-by-line: true
